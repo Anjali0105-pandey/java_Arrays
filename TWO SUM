@@ -1,0 +1,63 @@
+import java.util.*;
+/*
+class Solution {
+    //BRUTE FORCE
+    //TC : O(N^2)
+    //SC : O(1)
+    public int[] twoSum(int[] nums, int target) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j]+nums[i] == target  ) {
+                    return new int[] { i, j };
+                }
+            }
+        }
+        // In case there is no solution, we'll just return null
+        return null;
+    }
+}*/
+
+/*
+//Better Approach
+//TC : O(NlogN)
+//SC : O(N)
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int n=nums.length;
+        HashMap<Integer, Integer> mpp = new HashMap<>();
+                for (int i = 0; i < n; i++) {
+                    int num = nums[i];
+                    int moreNeeded = target - num;
+                  //  int j = nums.indexOf(moreNeeded);
+                    if (mpp.containsKey(moreNeeded)) {
+                        return new int[] { i, mpp.get(moreNeeded) };
+                    }
+
+                    mpp.put(nums[i], i);
+                }
+                return null;
+    }
+}
+*/
+
+//Optimised
+//TC : O(NlogN)+O(N)
+//SC : O(1)
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int left=0,right=nums.length-1;
+        Arrays.sort(nums);
+        while(left<right){
+            if(nums[left]+nums[right]==target){
+                return new int[]{left,right};
+                break;
+            }
+            else if(nums[left]+nums[right]>target)
+                right--;
+            else if(nums[left]+nums[right]==target)
+                left++;
+        }
+        return null;
+    }
+}
