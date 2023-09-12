@@ -1,0 +1,59 @@
+/*
+//BRUTE FORCE
+//TC : 0(N)+O(N)
+//SC : O(N)
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+
+        List<Integer> posList = new ArrayList<Integer>();
+        List<Integer> negList = new ArrayList<Integer>();
+
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>0){
+                posList.add(nums[i]);
+            }
+            else{
+                negList.add(nums[i]);
+            }
+        }
+
+        int[] ans = new int[nums.length];
+
+            int p = 0;
+            int q = 0 ;
+
+        for(int j=0;j<nums.length;j+=2){
+
+            ans[j] = posList.get(p);
+            p++;
+
+            ans[j+1] = negList.get(q);
+            q++;
+
+        }
+
+        return ans;
+    }
+}
+*/
+//OPTIMISED APPROACH
+//TC : O(N)
+//SC : O(N)
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+        int n=nums.length;
+        int posInd=0,negInd=1;
+        int ans[]=new int[n];
+        for(int i=0;i<n;i++){
+            if(nums[i]<0){
+                ans[negInd]=nums[i];
+                negInd+=2;
+            }
+            else{
+                ans[posInd]=nums[i];
+                posInd+=2;
+            }
+        }
+        return ans;
+    }
+}
