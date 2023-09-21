@@ -1,0 +1,125 @@
+import java.util.*;
+/*
+//BRUTE FORCE
+//TC : O(N^2)
+//SC : O(1)
+
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        List<Integer> list=new ArrayList<>();
+        
+        int n=nums.length;
+        for(int i=0;i<n;i++){
+            int count=0;
+            if(list.size()==0 || list.get(0)!=nums[i]){
+                for(int j=0;j<n;j++){
+                    if(nums[j]==nums[i])
+                        count++;
+                }
+                 if(count>(n/3))
+                    list.add(nums[i]);
+            }
+            if(list.size()==2)
+                break;
+           
+        }
+        return list;
+    }
+}
+*/
+
+/*
+//BETTER APPROACH : USING HASHING
+//TC : O(NlogN)+O(N)
+//SC : O(N)
+
+class Solution {
+   public List<Integer> majorityElement(int[] nums) { 
+        int N= nums.length;
+
+        //USING HASHING
+        HashMap<Integer,Integer> map= new HashMap<>();
+        List<Integer> list=new ArrayList<>();
+
+        // least occurrence of the majority element:
+        int mini = (int)(N / 3) + 1;
+
+        for (int i = 0; i < N; i++) {
+             int value = map.getOrDefault(nums[i], 0);
+             map.put(nums[i], value + 1);
+
+             //checking if v[i] is
+             // the majority element:
+             if (map.get(nums[i]) == mini) {
+                 list.add(nums[i]);
+             }
+             if (list.size() == 2) break;
+         }
+        return list;
+    }
+}
+*/
+/*
+class Solution {
+    public int majorityElement(int[] nums) {
+        int count=0;
+        int n=nums.length;
+        Arrays.sort(nums);
+        
+        return nums[n/2];
+    }
+}
+*/
+
+//OPTIMISED APPROACH - MOORE's VOTING ALGORITHM
+//TC : O(N)
+//SC : O(1)
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        int cnt1 = 0, cnt2 = 0; // counts
+        int el1 = Integer.MIN_VALUE; // element 1
+        int el2 = Integer.MIN_VALUE; // element 2
+
+        int n=nums.length;
+        
+        for(int i=0;i<n;i++){
+            if(cnt1==0 && el2 != nums[i])
+            {
+                cnt1=1;
+                el1=nums[i];
+            }
+            else if(cnt2==0 && el1 != nums[i])
+            {
+                cnt2=1;
+                el2=nums[i];
+            }
+            else if(nums[i]==el1)
+                cnt1++;
+            else if(nums[i]==el2)
+                cnt2++;
+            else{
+                cnt1--;
+                cnt2--;
+            }
+        }
+        List<Integer> list = new ArrayList<>(); // list of answers
+                // Manually check if the stored elements in
+        // el1 and el2 are the majority elements:
+        cnt1 = 0; cnt2 = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == el1) cnt1++;
+            if (nums[i] == el2) cnt2++;
+        }
+
+        int mini = (int)(n / 3) + 1;
+        if (cnt1 >= mini) list.add(el1);
+        if (cnt2 >= mini) list.add(el2);
+
+        // Uncomment the following line
+        // if it is told to sort the answer array:
+        //Collections.sort(ls); //TC --> O(2*log2) ~ O(1);
+
+        return list;
+
+    }
+}
