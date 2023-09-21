@@ -1,0 +1,40 @@
+/*Pattern of questions that can come
+
+Calculation of NCr
+
+n*(n-1)*....(n-k+1)
+for(int i=0;i<k;++i){
+    res*=(n-i);
+    res/=(i+1);
+}
+
+1. Print N rows of pascal triangle
+2. Print Nth row of pascal triangle
+    For this if i use the below formula for everyone time complexity will be huge
+    So we know NC0 i.e., first element=1 and NC1 i.e., second element is N
+3. Print element at Rth row and Cth column FORMULA : R-1
+                                                        C
+                                                         C-1
+
+Initialise first row as 1
+ */
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res= new ArrayList<List<Integer>>();
+        List<Integer> row,pre=null;
+
+        for(int i=0;i<numRows;++i){
+            row=new ArrayList<Integer>();
+            for(int j=0;j<=i;++j){
+                if(j==0 || j==i){
+                    row.add(1);
+                }
+                else
+                    row.add(pre.get(j-1)+pre.get(j));
+            }
+            pre=row;
+            res.add(row);
+        }
+        return res;
+    }
+}
